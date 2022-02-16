@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Web site created using create-react-app" />
+    <script src="https://unpkg.com/redux@latest/dist/redux.min.js"></script>
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="stylesheet" href="counter.css">
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>React App</title>
+</head>
+
+<body>
+
+    <div id="root">
+
+        <div class="counter">
+            <div id="digitalNumber">0</div>
+            <div class="buttons">
+                <div id="increment" class="button">+</div>
+                <div id="decrement" class="button">-</div>
+            </div>
+        </div>
+
+        <script>
+            const { createStore, combineReducers } = Redux
+            // Action Creator 
+            const clicked_increment = () => {
+                return {
+                    type: 'clicked_increment',
+                    payload: 'Plus'
+                }
+            }
+
+            const clicked_decrement = () => {
+                return {
+                    type: 'clicked_decrement',
+                    payload: 'Minus'
+                }
+            }
+            // Reducers
+            let newState = ''
+            const counterReducer = (state = 0, action) => {
+                switch (action.type) {
+                    case 'clicked_increment':
+                        newState = state + 1
+                        return newState
+                        break;
+                    case 'clicked_decrement':
+                        newState = state - 1
+                        return newState
+                        break;
+
+                    default:
+                        return state
+                        break;
+                }
+            }
+
+            const allReducers = combineReducers({
+                counterReducer: counterReducer
+            })
+            const store = createStore(allReducers)
+
+            const decButton = document.getElementById('decrement')
+            const incButton = document.getElementById('increment')
+
+            decButton.addEventListener('click', () => {
+                store.dispatch(clicked_decrement())
+            })
+
+            incButton.addEventListener('click', () => {
+                store.dispatch(clicked_increment())
+            })
+
+            const render = () => {
+                const appState = store.getState().counterReducer
+                console.log('============Current State')
+                console.log(appState)
+                document.getElementById('digitalNumber').innerHTML = appState
+            }
+            render()
+            store.subscribe(render)
+
+        </script>
+    </div>
+</body>
+
+</html>
