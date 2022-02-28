@@ -54,8 +54,26 @@ code {
     height: 100px;
     transition: background 0.4s ease-in-out;
     cursor: pointer;
+    font-size: 1.5rem;
+}
+
+.counter .buttons .button-decrement{
+    width: 50%;
+    background: rgb(76, 228, 255);
+    color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    transition: background 0.4s ease-in-out;
+    cursor: pointer;
+    font-size: 1.5rem;
 }
 
 .counter .buttons .button:hover{
     background: rgb(157, 170, 245);
+}
+
+.counter .buttons .button-decrement:hover{
+    background: rgb(157, 245, 241);
 }
